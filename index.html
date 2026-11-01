@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Vigilia Spirits | Indulge Tonight, Repent Tomorrow</title>
+    <meta
+      name="description"
+      content="The Nocturne Experience — an interactive, illustrated journey into the Vigilia Spirits Nocturne Collection. Cream liqueurs for saints and sinners alike."
+    />
+    <meta name="theme-color" content="#1d1d1d" />
+    <meta property="og:title" content="The Nocturne Experience — Vigilia Spirits" />
+    <meta property="og:description" content="An interactive comic journey into the Nocturne Collection." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  </head>
+  <body class="is-loading">
+    <a class="skip-link" href="#collection">Skip the story and go to the collection</a>
+
+    <!-- WebGL layers: illustrations render behind the text, 3D objects in front of it. -->
+    <canvas id="gl-back" class="gl gl--back" aria-hidden="true"></canvas>
+    <canvas id="gl-front" class="gl gl--front" aria-hidden="true"></canvas>
+
+    <!-- Loader -->
+    <div id="loader" class="loader" role="status" aria-live="polite">
+      <div class="loader__mark loader__wordmark" data-mark="wordmark"></div>
+      <div class="loader__mark loader__medallion" data-mark="medallion"></div>
+      <div class="loader__bar" aria-hidden="true">
+        <svg viewBox="0 0 400 12" preserveAspectRatio="none">
+          <path class="loader__track" d="M2 6 C80 3 160 9 240 5 S360 7 398 6" />
+          <path class="loader__fill" d="M2 6 C80 3 160 9 240 5 S360 7 398 6" pathLength="1" />
+        </svg>
+      </div>
+      <span class="sr-only">Loading the experience</span>
+    </div>
+
+    <!-- Age gate -->
+    <div id="gate" class="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" hidden>
+      <h2 id="gate-title" class="gate__title">
+        <span class="gate__line gate__line--top" data-split>Are you of</span>
+        <span class="gate__line gate__line--bottom" data-split>legal age?</span>
+      </h2>
+      <div class="gate__actions">
+        <button class="gate__btn" type="button" data-gate="yes"><span>Yes</span></button>
+        <div class="gate__ornament" data-mark="ornament" aria-hidden="true"></div>
+        <button class="gate__btn" type="button" data-gate="no"><span>No</span></button>
+      </div>
+      <p class="gate__denied" role="alert" hidden>You need to be of legal drinking age to enter this site.</p>
+    </div>
+
+    <!-- Header -->
+    <header class="header" data-reveal-ui>
+      <a class="header__logo" href="#experience" aria-label="Vigilia Spirits — back to the start">
+        <span class="header__medallion" data-mark="medallion"></span>
+        <span class="header__wordmark" data-mark="wordmark"></span>
+      </a>
+      <nav class="nav" aria-label="Primary">
+        <svg class="nav__frame" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path d="" /></svg>
+        <a class="nav__link is-active" href="#experience" data-nav="experience">Experience</a>
+        <span class="nav__squiggle" data-mark="squiggle" aria-hidden="true"></span>
+        <a class="nav__link" href="#collection" data-nav="collection">Collection</a>
+      </nav>
+    </header>
+
+    <!-- HUD -->
+    <div class="progress" aria-hidden="true"><div class="progress__thumb"></div></div>
+    <button class="audio" type="button" aria-pressed="false" aria-label="Toggle sound" data-reveal-ui>
+      <span class="audio__bar"></span><span class="audio__bar"></span><span class="audio__bar"></span><span class="audio__bar"></span>
+    </button>
+
+    <!-- Custom cursor -->
+    <div id="cursor" class="cursor" aria-hidden="true">
+      <div class="cursor__dot"></div>
+      <div class="cursor__bubble">
+        <svg class="cursor__ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" pathLength="1" /></svg>
+        <span class="cursor__label"></span>
+      </div>
+    </div>
+
+    <div class="rotate" aria-hidden="true"><p>Please rotate<br />your device.</p></div>
+
+    <main id="app" class="page">
+      <!-- 1 · Title -->
+      <section id="experience" class="hero scene" data-scene="hero" aria-label="The Nocturne Experience">
+        <div class="scene__pin">
+          <div class="plate plate--fill" data-program="brush" data-name="brush"></div>
+          <h1 class="hero__title" aria-label="The Nocturne Experience">
+            <span class="hero__the" data-split>The</span>
+            <span class="hero__word hero__word--1" aria-hidden="true">
+              <span class="ch">N</span><span class="ch hero__rings"><i></i><i></i></span><span class="ch">C</span><span class="ch">T</span><span class="ch">U</span><span class="ch">R</span><span class="ch">N</span><span class="ch">E</span>
+            </span>
+            <span class="hero__word hero__word--2" aria-hidden="true">
+              <span class="ch">E</span><span class="ch">X</span><span class="ch">P</span><span class="ch">E</span><span class="ch">R</span><span class="ch">I</span><span class="ch">E</span><span class="ch">N</span><span class="ch">C</span><span class="ch hero__swash">E</span>
+            </span>
+          </h1>
+          <p class="hero__hint" aria-hidden="true"><span>Scroll</span></p>
+          <div class="plate plate--fill" data-program="splash" data-name="splash"></div>
+        </div>
+      </section>
+
+      <!-- 2 · Arrival -->
+      <section class="chapter chapter--arrival" data-scene="arrival" aria-label="Chapter one: the pilgrimage">
+        <div class="plate plate--fill" data-program="solid" data-color="paper"></div>
+
+        <figure class="panel p-a1" data-panel>
+          <div class="plate plate--fill" data-art="desert-ruins" data-reveal="melt" role="img" aria-label="A desert of dunes with distant ruins"></div>
+          <div class="plate fig p-a1__fig" data-art="saint-walk-back" data-parallax="-0.05" data-reveal="melt"></div>
+        </figure>
+        <span class="sfx sfx--bell" aria-hidden="true">Dooong…</span>
+        <p class="caption c-a1"><em>A distant bell</em> tolls across the dunes. The saint lowers his hood and searches the horizon, uneasy.</p>
+
+        <figure class="panel p-a2" data-panel>
+          <div class="plate plate--fill" data-program="tone" data-reveal="melt"></div>
+        </figure>
+        <div class="plate fig p-a2__fig" data-art="saint-profile" data-reveal="melt" role="img" aria-label="The saint in profile"></div>
+
+        <figure class="panel p-a3" data-panel>
+          <div class="plate plate--fill" data-art="storm-monolith" data-reveal="melt" role="img" aria-label="A storm gathers over a stone monolith and a dark red orb"></div>
+          <div class="plate fig p-a3__fig" data-art="saint-walk-back" data-parallax="-0.04"></div>
+        </figure>
+        <figure class="panel p-a4" data-panel>
+          <div class="plate plate--fill" data-art="feet-step" data-reveal="melt"></div>
+        </figure>
+        <p class="caption c-a2"><em>There is no time left.</em><br />He must reach the top before the light is gone.</p>
+
+        <figure class="panel panel--bleed p-a5" data-panel>
+          <div class="plate plate--fill" data-art="portal" data-reveal="melt" data-name="portal" role="img" aria-label="A giant crimson disc glows at the end of a stone corridor"></div>
+          <div class="plate fig p-a5__fig" data-art="saint-silhouette" data-name="portalFig"></div>
+        </figure>
+        <span class="sfx sfx--hum" aria-hidden="true">Vmmmmm</span>
+        <p class="caption c-a3"><em>At the top of the stair</em>, a hum rises from the stone — low, warm, impossible to ignore. The great disc begins to breathe.</p>
+        <p class="caption c-a4">The wind turns gentle, almost playful. Standing at the threshold, he lifts a hand…</p>
+      </section>
+
+      <!-- 3 · Hand (hold & move) -->
+      <section class="scene scene--hand" data-scene="hand" aria-label="The saint reaches for the portal">
+        <div class="scene__pin" data-hold-zone="hand" data-cursor="Hold &amp; move">
+          <div class="plate plate--fill" data-program="solid" data-color="maroon"></div>
+          <div class="plate plate--fill" data-art="wood-surface" data-program="smear" data-fit="cover" data-name="wood"></div>
+          <div class="frame-box" aria-hidden="true"></div>
+          <div class="plate hand" data-art="hand-reach" data-name="hand" role="img" aria-label="An engraved hand reaching forward"></div>
+          <p class="caption c-h1"><em>Slowly</em>, his fingers reach for the surface.</p>
+          <button class="hold-btn" type="button" data-hold-button="hand" aria-label="Press and hold to reach for the surface"><span>Hold</span></button>
+        </div>
+        <div class="plate drip" data-program="drips" data-color="paper" data-noclip aria-hidden="true"></div>
+      </section>
+
+      <!-- 4 · Arch -->
+      <section class="scene scene--arch" data-scene="arch" aria-label="The saint steps through a circular window">
+        <div class="scene__pin">
+          <div class="plate plate--fill" data-program="solid" data-color="ink"></div>
+          <div class="arch__stage">
+            <div class="plate plate--fill" data-art="arch-window" data-name="arch" role="img" aria-label="A circular window onto a red sky, framed by columns"></div>
+            <div class="plate arch__fig" data-art="saint-silhouette" data-name="archFig"></div>
+          </div>
+          <p class="caption c-r1"><em>One deep breath</em>, and he steps through.</p>
+        </div>
+        <div class="plate drip" data-program="drips" data-color="maroon" data-noclip aria-hidden="true"></div>
+      </section>
+
+      <!-- 5 · Hall -->
+      <section class="chapter chapter--hall" data-scene="hall" aria-label="A vaulted crimson hall">
+        <div class="plate plate--fill" data-program="solid" data-color="ink"></div>
+        <div class="plate p-h1" data-art="red-hall" data-name="hall" role="img" aria-label="A hall of red columns leading to an altar with three bottles"></div>
+        <p class="caption c-h2"><em>For a heartbeat</em> the world goes dark.<br />He wakes in a vaulted hall, bathed in a crimson glow.</p>
+        <figure class="panel p-h2" data-panel>
+          <div class="plate plate--fill" data-art="eyes-calm" data-reveal="melt" role="img" aria-label="Close-up of the saint's eyes"></div>
+        </figure>
+      </section>
+
+      <!-- 6 · Table -->
+      <section class="chapter chapter--table" data-scene="table" aria-label="Three bottles on a pedestal">
+        <div class="plate plate--fill" data-program="solid" data-color="paper"></div>
+        <figure class="panel panel--bleed p-t1" data-panel>
+          <div class="plate plate--fill" data-art="table-scene" data-reveal="melt" role="img" aria-label="Three bottles on a stone pedestal before a red wall"></div>
+          <div class="plate fig p-t1__fig" data-art="saint-standing" data-parallax="-0.03"></div>
+        </figure>
+        <p class="caption c-t1"><em>Three</em> bottles wait on a stone pedestal, trembling with a quiet shimmer. The saint hesitates — they seem to be calling his name.</p>
+        <div class="plate drip" data-program="drips" data-color="ink" data-noclip aria-hidden="true"></div>
+      </section>
+
+      <!-- 7 · Choose flavour -->
+      <section class="scene scene--flavors" data-scene="flavors" aria-label="Choose your flavour">
+        <div class="scene__pin" data-cursor="Choose flavor">
+          <div class="plate plate--fill" data-program="solid" data-color="paper"></div>
+          <div class="cover-box cover-box--bottles">
+            <div class="plate plate--fill" data-art="bottles-backdrop"></div>
+            <div class="plate bottle bottle--1" data-art="bottle-tall" data-accent="#6fb3e6" data-name="bottle0"></div>
+            <div class="plate bottle bottle--2" data-art="bottle-tall" data-accent="#86cf6a" data-name="bottle1"></div>
+            <div class="plate bottle bottle--3" data-art="bottle-tall" data-accent="#f1cf3a" data-name="bottle2"></div>
+            <div class="flavors__hits" role="radiogroup" aria-label="Choose a flavour">
+              <button class="bottle-hit bottle-hit--1" type="button" role="radio" aria-checked="true" data-flavor="0"><span class="sr-only">Midnight Berry &amp; Cream</span></button>
+              <button class="bottle-hit bottle-hit--2" type="button" role="radio" aria-checked="false" data-flavor="1"><span class="sr-only">Pistachio &amp; Honey</span></button>
+              <button class="bottle-hit bottle-hit--3" type="button" role="radio" aria-checked="false" data-flavor="2"><span class="sr-only">Lemon &amp; Saffron</span></button>
+            </div>
+          </div>
+          <p class="caption c-f1"><em>Choose your spirit.</em> Each one leads somewhere different.</p>
+          <p class="flavors__label" aria-live="polite"><span class="flavors__num">N.01</span><span class="flavors__name">Midnight Berry &amp; Cream</span></p>
+        </div>
+      </section>
+
+      <!-- 8 · Pour (hold & pour) -->
+      <section class="scene scene--pour" data-scene="pour" aria-label="Pour the spirit">
+        <div class="scene__pin" data-hold-zone="pour" data-cursor="Hold &amp; pour">
+          <div class="plate plate--fill" data-program="solid" data-color="red"></div>
+          <div class="cover-box cover-box--pour">
+            <div class="plate plate--fill" data-art="pour-backdrop"></div>
+            <div class="plate glass" data-art="glass" data-accent="flavor" data-name="glass" role="img" aria-label="A martini glass"></div>
+            <div class="plate pour-bottle" data-art="hand-bottle" data-accent="flavor" data-name="pourBottle" role="img" aria-label="A hand holding a bottle"></div>
+            <div class="plate stream" data-program="stream" data-accent="flavor" data-name="stream"></div>
+          </div>
+          <p class="caption c-p1" aria-live="polite"><em>A slow pour.</em> The glass fills with colour.</p>
+          <button class="hold-btn" type="button" data-hold-button="pour" aria-label="Press and hold to pour"><span>Hold</span></button>
+        </div>
+        <div class="plate drip" data-program="drips" data-color="ink" data-noclip aria-hidden="true"></div>
+      </section>
+
+      <!-- 9 · Drink -->
+      <section class="chapter chapter--drink" data-scene="drink" aria-label="The saint drinks">
+        <div class="plate plate--fill" data-program="solid" data-color="red"></div>
+        <div class="plate d-col" data-art="column-fluted" data-parallax="0.08"></div>
+        <div class="plate fig d-fig" data-art="saint-drink" data-accent="flavor" data-reveal="melt" role="img" aria-label="The saint drinks from the glass"></div>
+        <figure class="panel p-d1" data-panel>
+          <div class="plate plate--fill" data-art="saint-mini-drink" data-accent="flavor" data-reveal="melt"></div>
+        </figure>
+        <figure class="panel p-d2" data-panel>
+          <div class="plate plate--fill" data-art="eyes-wide" data-accent="flavor" data-reveal="melt" role="img" aria-label="The saint's eyes open wide"></div>
+        </figure>
+        <div class="plate drip" data-program="drips" data-color="ink" data-noclip aria-hidden="true"></div>
+      </section>
+
+      <!-- 10 · Vortex (hold) -->
+      <section class="scene scene--vortex" data-scene="vortex" aria-label="A vortex of light lifts the saint">
+        <div class="scene__pin" data-hold-zone="vortex" data-cursor="Hold">
+          <div class="plate plate--fill" data-program="vortex" data-accent="flavor" data-name="vortex"></div>
+          <div class="plate v-fig" data-art="saint-float" data-accent="flavor" data-name="floatFig" role="img" aria-label="The saint floats inside a whirlwind"></div>
+          <p class="caption c-v1"><em>The saint drinks</em>, and light pours out of him — cream, fruit and something older than both. A current lifts him beyond the senses.</p>
+          <button class="hold-btn" type="button" data-hold-button="vortex" aria-label="Press and hold to stir the whirlwind"><span>Hold</span></button>
+        </div>
+        <div class="plate drip" data-program="drips" data-color="red" data-noclip aria-hidden="true"></div>
+      </section>
+
+      <!-- 11 · Collapse -->
+      <section class="chapter chapter--collapse" data-scene="collapse" aria-label="The columns break apart">
+        <div class="plate plate--fill" data-program="solid" data-color="red"></div>
+        <div class="plate p-c1" data-art="columns-broken" data-reveal="melt" role="img" aria-label="Two great columns crack and break apart"></div>
+        <p class="caption c-c1"><em>The saint</em> drifts gently back to the floor, his robe soaked in the colour of the spirit.</p>
+        <figure class="panel p-c2" data-panel>
+          <div class="plate plate--fill" data-art="saint-mini-accent" data-accent="flavor" data-reveal="melt"></div>
+        </figure>
+        <span class="sfx sfx--crack" aria-hidden="true">Krrak!</span>
+        <p class="caption c-c2">A thunderous crack splits the hall. The columns tear loose and the roof lifts away, revealing a burning red sky.</p>
+        <div class="plate stone s-1" data-art="stone-a" data-layer="front" data-parallax="0.45" data-spin="40"></div>
+        <div class="plate stone s-2" data-art="stone-b" data-layer="front" data-parallax="0.8" data-spin="-60"></div>
+        <div class="plate stone s-3" data-art="stone-c" data-layer="front" data-parallax="0.3" data-spin="25"></div>
+        <div class="plate drip" data-program="drips" data-color="ink" data-noclip aria-hidden="true"></div>
+      </section>
+
+      <!-- 12 · Finale -->
+      <section class="chapter chapter--finale" data-scene="finale" aria-label="Finale: the ruins open onto a red sky">
+        <div class="plate plate--fill" data-program="solid" data-color="red"></div>
+        <p class="finale__title" aria-hidden="true">
+          <span class="finale__the">The</span>
+          <span class="finale__word">N<span class="finale__rings"><i></i><i></i></span>CTURNE</span>
+          <span class="finale__word">EXPERIENC<span class="finale__swash">E</span></span>
+        </p>
+        <div class="plate f-ruins" data-art="ruins-colonnade" data-name="ruins"></div>
+        <div class="plate fig f-fig" data-art="saint-walk-away" data-accent="flavor" data-parallax="-0.04" data-name="walkAway"></div>
+        <div class="plate stone s-4" data-art="stone-b" data-layer="front" data-parallax="0.55" data-spin="-30"></div>
+        <div class="plate stone s-5" data-art="stone-a" data-layer="front" data-parallax="0.9" data-spin="50"></div>
+        <div class="plate stone s-6" data-art="stone-c" data-layer="front" data-parallax="0.35" data-spin="-45"></div>
+        <div class="plate stone s-7" data-art="stone-a" data-layer="front" data-parallax="0.7" data-spin="35"></div>
+        <div class="plate plate--fill f-ink" data-program="solid" data-color="ink" data-name="finaleInk"></div>
+      </section>
+
+      <!-- 13 · Collection -->
+      <section id="collection" class="collection" data-scene="collection" aria-labelledby="collection-title">
+        <svg class="collection__edge" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true"><path d="" /></svg>
+        <div class="collection__intro">
+          <h2 id="collection-title" class="display collection__title">
+            <span class="line" data-split>Indulge tonight</span>
+            <span class="line line--orn"><span class="orn" data-mark="squiggle"></span><span data-split>Repent tomorrow</span><span class="orn orn--r" data-mark="squiggle"></span></span>
+          </h2>
+          <div class="collection__labels">
+            <p class="label">The Nocturne Collection<br />is a hymn to the night</p>
+            <p class="label">A sip<br />of the forbidden</p>
+            <p class="label label--center">Born in the hush<br />of the late hours</p>
+          </div>
+          <p class="body collection__body">Every vigil deserves a reward. Vigilia Spirits is poured for the saints and the sinners alike. The Nocturne Collection folds heavenly cream into earthly decadence — to loosen the soul and keep the night beautifully undecided.</p>
+          <div class="collection__brand">
+            <p class="label">Vigilia<br />Spirits</p>
+            <p class="label">Nocturne<br />Collection</p>
+          </div>
+        </div>
+
+        <div class="ritual">
+          <p class="label ritual__side ritual__side--l">The night begins<br />after dessert</p>
+          <div class="ritual__card">
+            <div class="ritual__head"><span class="label">Vigilia</span><span class="label label--red">Nocturne Collection</span><span class="label">Spirits</span></div>
+            <p class="display ritual__text">Serve it cold. The night begins after dessert. Stir it slow. Let the hours drift. Share it well. The rest is yours to write.</p>
+            <div class="ritual__orn" data-mark="ornament"></div>
+            <p class="label label--red">A hymn to the night, yours to keep</p>
+            <div class="anchor3d ritual__glass" data-3d="glass" aria-hidden="true"></div>
+          </div>
+          <p class="label ritual__side ritual__side--r">The rest is<br />yours to write</p>
+        </div>
+
+        <div class="showcase" aria-roledescription="carousel" aria-label="The Nocturne Collection">
+          <div class="showcase__stage">
+            <h3 class="display showcase__name" aria-live="polite"><span class="showcase__name-inner">Midnight Berry<br /><span class="amp">&amp;</span> Cream</span></h3>
+            <div class="anchor3d showcase__bottle" data-3d="bottle" aria-hidden="true"></div>
+            <p class="label showcase__notes">Velvet cream<br />dark berries<br />a hint of vanilla</p>
+          </div>
+          <div class="showcase__meta">
+            <p class="label showcase__id"><span>Nocturne</span><span class="showcase__num">N.01</span></p>
+            <div class="showcase__glyph" data-mark="ornament"></div>
+            <p class="label showcase__spec"><span class="showcase__abv">14% ABV</span><span>700 ML</span></p>
+          </div>
+          <div class="showcase__nav">
+            <button class="round-btn" type="button" data-slide="prev" aria-label="Previous flavour"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7" /></svg></button>
+            <button class="round-btn" type="button" data-slide="next" aria-label="Next flavour"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <section class="forthcoming" aria-labelledby="forthcoming-title">
+        <div class="forthcoming__orn" data-mark="ornament"></div>
+        <p class="label label--red forthcoming__side">Vigilia<br />Spirits</p>
+        <h2 id="forthcoming-title" class="display forthcoming__title"><span data-split>First pours</span><span data-split>arriving soon</span></h2>
+        <p class="label label--red forthcoming__side">Nocturne<br />Collection</p>
+      </section>
+
+      <footer class="footer">
+        <a class="footer__logo" href="#experience" aria-label="Vigilia Spirits — back to the start">
+          <span class="footer__medallion" data-mark="medallion"></span>
+          <span class="footer__wordmark" data-mark="wordmark"></span>
+        </a>
+        <div class="footer__col">
+          <a class="label footer__link" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+          <a class="footer__mail" href="mailto:hello@vigilia-spirits.example">hello@vigilia-spirits.example</a>
+        </div>
+        <div class="footer__bottom">
+          <p class="footer__credit">Original concept recreation · illustration &amp; code drawn from scratch</p>
+          <button class="footer__legal" type="button" data-legal>Legal</button>
+        </div>
+      </footer>
+    </main>
+
+    <dialog class="legal" id="legal">
+      <h2 class="label">Legal</h2>
+      <p>Vigilia Spirits is a fictional placeholder brand used for this interactive demo. Please enjoy alcohol responsibly and only if you are of legal drinking age in your country.</p>
+      <form method="dialog"><button class="round-btn round-btn--text" type="submit">Close</button></form>
+    </dialog>
+
+    <noscript><p class="noscript">This experience needs JavaScript. Please enable it to continue.</p></noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
